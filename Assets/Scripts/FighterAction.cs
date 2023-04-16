@@ -24,11 +24,11 @@ public class FighterAction : MonoBehaviour
         }
         if (btn.CompareTo("Slash") == 0)
         {
-            Debug.Log("Slash!");
+            meleeAttack.GetComponent<AttackScript>().Attack(victim);
         }
         else if (btn.CompareTo("Slash2") == 0)
         {
-            Debug.Log("Slash2!");
+            meleeAttack2.GetComponent<AttackScript>().Attack(victim);
         }
         else
         {
