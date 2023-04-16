@@ -17,16 +17,16 @@ public class MakeButton : MonoBehaviour
 
 private void AttachCallback(string btn)
     {
-        if (btn.CompareTo("BtnBar1") == 0)
+        if (btn.CompareTo("SlashBtn") == 0)
         {
             hero.GetComponent<FighterAction>().SelectAttack("Slash");
-        }else if (btn.CompareTo("BtnBar2") == 0)
+        }else if (btn.CompareTo("SlashBtn2") == 0)
         {
             hero.GetComponent<FighterAction>().SelectAttack("Slash2");
         }
         else
         {
-            //Debug.log("Run Button Pressed");
+            hero.GetComponent<FighterAction>().SelectAttack("Slash3");
         }
     }
 }
