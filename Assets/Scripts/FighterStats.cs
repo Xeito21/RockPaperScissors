@@ -68,8 +68,6 @@ public class FighterStats : MonoBehaviour, IComparable
             Destroy(gameObject);
 
             // Menampilkan pesan bahwa player menang
-            GameControllerObj.GetComponent<GameController>().battleText.gameObject.SetActive(true);
-            GameControllerObj.GetComponent<GameController>().battleText.text = "You Win!";
 
             // Menghentikan permainan setelah 3 detik
             Invoke("StopGame", 3f);

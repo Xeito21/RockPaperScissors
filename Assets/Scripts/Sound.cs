@@ -8,5 +8,5 @@ public class Sound
 {
     public string name;
     public AudioClip clip;
-
+    internal float volume;
 }
