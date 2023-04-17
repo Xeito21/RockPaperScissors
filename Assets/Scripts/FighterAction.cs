@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class FighterAction : MonoBehaviour
 {
-    private GameObject Goblin;
-    private GameObject Angelica;
+    private GameObject goblin;
+    private GameObject angelica;
 
     [SerializeField] private GameObject meleePrefab;
     [SerializeField] private GameObject meleePrefab2;
@@ -15,17 +15,17 @@ public class FighterAction : MonoBehaviour
 
     private void Awake()
     {
-        Angelica = GameObject.FindGameObjectWithTag("Hero");
-        Goblin = GameObject.FindGameObjectWithTag("Enemy");
+        angelica = GameObject.FindGameObjectWithTag("Hero");
+        goblin = GameObject.FindGameObjectWithTag("Enemy");
     }
 
 
     public void SelectAttack(string btn)
     {
-        GameObject victim = Angelica;
+        GameObject victim = angelica;
         if (tag == "Hero")
         {
-            victim = Goblin;
+            victim = goblin;
         }
         if (btn.CompareTo("Attack") == 0)
         {

@@ -16,14 +16,7 @@ public class AttackScript : MonoBehaviour
     private FighterStats attackerStats;
     private FighterStats targetStats;
     private float damage = 0.0f;
-    private float xManaNewScale;
-    private Vector2 manaScale;
 
-
-    private void Start()
-    {
-        manaScale = GameObject.Find("HeroManaFill").GetComponent<RectTransform>().localScale;
-    }
 
 
     public void Attack(GameObject victim)
@@ -31,25 +24,34 @@ public class AttackScript : MonoBehaviour
 
         attackerStats = owner.GetComponent<FighterStats>();
         targetStats = victim.GetComponent<FighterStats>();
-        
-        if(attackerStats.mana >= magicCost)
+
+        if (attackerStats.mana >= magicCost)
         {
             float multiplier = Random.Range(minAttackMultiplier, maxAttackMultiplier);
-            attackerStats.updateManaFill(magicCost);
+            if (magicCost > 0)
+            {
+                attackerStats.updateManaFill(magicCost);
+            }
+
             damage = multiplier * attackerStats.melee;
             if (slashAttack2)
             {
-                damage = multiplier * attackerStats.mana;
-                attackerStats.mana = attackerStats.manaRange;
+                damage = multiplier * attackerStats.manaRange;
             }
 
             float defenseMultiplier = Random.Range(minDefenseMultiplier, maxDefenseMultiplier);
             damage = Mathf.Max(0, damage - (defenseMultiplier * targetStats.defense));
             owner.GetComponent<Animator>().Play(animationName);
-            targetStats.ReceiveDamage(damage);
-
+            targetStats.ReceiveDamage(Mathf.CeilToInt(damage));
+            attackerStats.updateManaFill(magicCost);
         }
-        
+        else
+        {
+            Invoke("SkipTurnContinueGame", 2);
+        }
     }
-    
+    void SkipTurnContinueGame()
+    {
+        GameObject.Find("GameControllerObject").GetComponent<GameController>().NextTurn();
+    }
 }

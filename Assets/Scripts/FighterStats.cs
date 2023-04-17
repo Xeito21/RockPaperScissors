@@ -11,6 +11,7 @@ public class FighterStats : MonoBehaviour, IComparable
     [SerializeField] GameObject healthFill;
     [SerializeField] GameObject manaFill;
 
+
     [Header("Stats")]
     public float health;
     public float mana;
@@ -34,9 +35,10 @@ public class FighterStats : MonoBehaviour, IComparable
 
     private float xNewHealthScale;
     private float xNewManaScale;
+    private GameObject GameControllerObj;
 
 
-    private void Start()
+    private void Awake()
     {
         healthTransform = healthFill.GetComponent<RectTransform>();
         healthScale = healthFill.transform.localScale;
@@ -46,10 +48,14 @@ public class FighterStats : MonoBehaviour, IComparable
 
         startHealth = health;
         startmana = mana;
+
+        GameControllerObj = GameObject.Find("GameControllerObject");
     }
 
     public void ReceiveDamage(float damage)
     {
+        Debug.Log("Damage rece");
+
         health = health - damage;
         animator.Play("Hurt");
 
@@ -61,23 +67,48 @@ public class FighterStats : MonoBehaviour, IComparable
             Destroy(healthFill);
             Destroy(gameObject);
         }
-        else
+        else if(damage > 0 )
         {
             xNewHealthScale = healthScale.x * (health / startHealth);
             healthFill.transform.localScale = new Vector2(xNewHealthScale, healthScale.y);
         }
+        if(damage > 0)
+        {
+            GameControllerObj.GetComponent<GameController>().battleText.gameObject.SetActive(true);
+            GameControllerObj.GetComponent<GameController>().battleText.text = damage.ToString();
+        }
+
+        Invoke("ContinueGame", 2);
     }
 
     public void updateManaFill(float cost)
     {
-        mana = mana - cost;
-        xNewManaScale = manaScale.x * (mana / startmana);
-        manaFill.transform.localScale = new Vector2(xNewManaScale, manaScale.y);
-    }
+        if(cost > 0)
+        {
+            mana = mana - cost;
+            xNewManaScale = manaScale.x * (mana / startmana);
+            manaFill.transform.localScale = new Vector2(xNewManaScale, manaScale.y);
+        }
 
+    }
+    void ContinueGame()
+    {
+        GameObject.Find("GameControllerObject").GetComponent<GameController>().NextTurn();
+    }
     public int CompareTo(object otherStats)
     {
         int nex = nextActTurn.CompareTo(((FighterStats)otherStats).nextActTurn);
         return nex;
     }
+
+    public void CalculateNextTurn(int currentTurn)
+    {
+        nextActTurn = currentTurn + Mathf.CeilToInt(100f / speed);
+    }
+
+    public bool GetDead()
+    {
+        return dead;
+    }
+
 }
