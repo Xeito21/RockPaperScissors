@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
 
-public class FighterStats : MonoBehaviour
+
+public class FighterStats : MonoBehaviour, IComparable
 {
     [SerializeField] private Animator animator;
     [SerializeField] GameObject healthFill;
@@ -11,7 +14,7 @@ public class FighterStats : MonoBehaviour
     [Header("Stats")]
     public float health;
     public float mana;
-    public float attack;
+    public float melee;
     public float defense;
     public float range;
     public float speed;
@@ -70,5 +73,11 @@ public class FighterStats : MonoBehaviour
         mana = mana - cost;
         xNewManaScale = manaScale.x * (mana / startmana);
         manaFill.transform.localScale = new Vector2(xNewManaScale, manaScale.y);
+    }
+
+    public int CompareTo(object otherStats)
+    {
+        int nex = nextActTurn.CompareTo(((FighterStats)otherStats).nextActTurn);
+        return nex;
     }
 }
