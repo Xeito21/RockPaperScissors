@@ -5,31 +5,35 @@ using UnityEngine.UI;
 
 public class FighterAction : MonoBehaviour
 {
-    private GameObject enemy;
-    private GameObject hero;
+    private GameObject Goblin;
+    private GameObject Angelica;
 
     [SerializeField] private GameObject meleePrefab;
     [SerializeField] private GameObject meleePrefab2;
     [SerializeField] private Sprite faceIcon;
     private GameObject currentAttack;
-    private GameObject meleeAttack;
-    private GameObject meleeAttack2;
+
+    private void Awake()
+    {
+        Angelica = GameObject.FindGameObjectWithTag("Hero");
+        Goblin = GameObject.FindGameObjectWithTag("Enemy");
+    }
 
 
     public void SelectAttack(string btn)
     {
-        GameObject victim = hero;
+        GameObject victim = Angelica;
         if (tag == "Hero")
         {
-            victim = enemy;
+            victim = Goblin;
         }
-        if (btn.CompareTo("Slash") == 0)
+        if (btn.CompareTo("Attack") == 0)
         {
-            meleeAttack.GetComponent<AttackScript>().Attack(victim);
+            meleePrefab.GetComponent<AttackScript>().Attack(victim);
         }
-        else if (btn.CompareTo("Slash2") == 0)
+        else if (btn.CompareTo("Attack2") == 0)
         {
-            meleeAttack2.GetComponent<AttackScript>().Attack(victim);
+            meleePrefab2.GetComponent<AttackScript>().Attack(victim);
         }
         else
         {

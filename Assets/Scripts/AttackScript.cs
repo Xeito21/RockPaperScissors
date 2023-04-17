@@ -25,22 +25,22 @@ public class AttackScript : MonoBehaviour
         manaScale = GameObject.Find("HeroManaFill").GetComponent<RectTransform>().localScale;
     }
 
-    
+
     public void Attack(GameObject victim)
     {
-        
+
         attackerStats = owner.GetComponent<FighterStats>();
         targetStats = victim.GetComponent<FighterStats>();
-        /*
+        
         if(attackerStats.mana >= magicCost)
         {
             float multiplier = Random.Range(minAttackMultiplier, maxAttackMultiplier);
             attackerStats.updateManaFill(magicCost);
-            damage = multiplier * attackerStats.attack;
+            damage = multiplier * attackerStats.melee;
             if (slashAttack2)
             {
                 damage = multiplier * attackerStats.mana;
-                attackerStats.mana = attackerStats.mana - magicCost;
+                attackerStats.mana = attackerStats.manaRange;
             }
 
             float defenseMultiplier = Random.Range(minDefenseMultiplier, maxDefenseMultiplier);
@@ -49,7 +49,6 @@ public class AttackScript : MonoBehaviour
             targetStats.ReceiveDamage(damage);
 
         }
-        /*
         
     }
     

@@ -5,28 +5,30 @@ using UnityEngine.UI;
 
 public class MakeButton : MonoBehaviour
 {
-    [SerializeField] private bool physical;
-    private GameObject hero;
-    // Start is called before the first frame update
+    [SerializeField]
+    private bool physical;
+
+    private GameObject Angelica;
     void Start()
     {
         string temp = gameObject.name;
         gameObject.GetComponent<Button>().onClick.AddListener(() => AttachCallback(temp));
-        hero = GameObject.FindGameObjectWithTag("Hero");
+        Angelica = GameObject.FindGameObjectWithTag("Hero");
     }
 
-private void AttachCallback(string btn)
+    private void AttachCallback(string btn)
     {
         if (btn.CompareTo("SlashBtn") == 0)
         {
-            hero.GetComponent<FighterAction>().SelectAttack("Slash");
-        }else if (btn.CompareTo("SlashBtn2") == 0)
+            Angelica.GetComponent<FighterAction>().SelectAttack("Attack");
+        }
+        else if (btn.CompareTo("SlashBtn2") == 0)
         {
-            hero.GetComponent<FighterAction>().SelectAttack("Slash2");
+            Angelica.GetComponent<FighterAction>().SelectAttack("Attack2");
         }
         else
         {
-            hero.GetComponent<FighterAction>().SelectAttack("Slash3");
+            Angelica.GetComponent<FighterAction>().SelectAttack("run");
         }
     }
 }
